@@ -16,16 +16,20 @@ class enemy{
   size = 5;
  }
   void draw(){
+    fill(col1,col2,col3);
     ellipse(x, y, size, size);
-  }
-  void move(){
-    y += speed;
-    
-  }
-   void hit(){
+    y = y+speed;
     float distance = dist(x, y, mouseX, mouseY);
     if (distance < 25){
-      health -= 1;
+    health = health - 1;
+    
+  }
+  if (y>800){      
+      temp_score = temp_score + 1;
+      y = 10;
+    }
+    if (temp_score == score){
+     score = score + 1; 
     }
     
   }

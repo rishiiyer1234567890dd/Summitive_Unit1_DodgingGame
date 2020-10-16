@@ -8,6 +8,7 @@ class player{
     size = 20;
   }
   void draw(){
+    background(255,255,255);
     ellipse(mouseX, mouseY, size, size); 
   }
  

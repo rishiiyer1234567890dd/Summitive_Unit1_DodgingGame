@@ -1,15 +1,22 @@
 boolean isAlive = true;
 int scene = 0;
 int health = 0;
-int score = 0;
+int score = 1;
 int topScore = 0;
-player Player = new player();
 int lvl = 0;
-int levelCheck = 0;
+int temp_score = 0;
+float y = random(0,-100);
+enemy[] myEnemys = new enemy[100];
+player Player = new player();
 void setup() {
   size(800, 800);
+  for (int i = 0; i < 100; i++)
+  {
+    myEnemys[i] = new enemy(y);
+  }
 }
 void draw() {
+  // Scene 0 (Start)
   if (scene == 0) {
     background(0, 0, 0);
     fill(255, 255, 255);
@@ -17,14 +24,13 @@ void draw() {
     textSize(15);
     text("Press TAB to start", 400, 400);
   }
+  //Scene 1 (Lvl Select)
   if (scene == 1) {
     background(255, 255, 255);
     fill(255);
     rect(100, 100, 200, 100);
     rect(450, 100, 200, 100);
     rect(300, 250, 200, 100);
-
-
     textAlign(CENTER, CENTER);
     textSize(15);
     fill(0);
@@ -50,22 +56,35 @@ void draw() {
         scene = 2;
       }
     }
-
-
-    if (scene == 2) {
-      if (isAlive == true){
-        background(255,255,255); 
-        Player.draw();   
-      }  
   }
+  //Scene 2 (The game)
+  if ((scene == 2)&&(isAlive == true)) {
+    Player.draw();
+    for (int i = 0;i < score; i++) {
+      myEnemys[i].draw();
+    }
+    if (health < 1){
+      scene = 3;
+      
+    }
   }
-}
+
+    //Scene 3 (Game Over)
+    if (scene == 3) {
+      topScore = score + topScore;
+      background(0, 255, 0);
+      textAlign(CENTER, CENTER);
+      textSize(30);
+      text("Game Over :( Press TAB to continue", 400, 400);
+    }
+  }
 
 
-     void keyPressed() {
-      if (scene == 0) {
-        if (key == TAB) {
-          scene = 1;
-        }
+  void keyPressed() {
+    if ((scene == 0)||(scene == 3)) {
+      if (key == TAB) {
+        scene = 1;
+        score = 1;
       }
     }
+  }
